@@ -37,10 +37,7 @@ class TestStudentAPI:
 
     def test_create_student_success(self):
         """Teste de sucesso para criar novo aluno"""
-        new_student = {
-            "name": "Novo Aluno",
-            "email": "novo.aluno@example.com"
-        }
+        new_student = {"name": "Novo Aluno", "email": "novo.aluno@example.com"}
         response = client.post("/students", json=new_student)
         assert response.status_code == 200
         data = response.json()
@@ -51,12 +48,9 @@ class TestStudentAPI:
     def test_create_student_duplicate_email(self):
         """Teste de falha para criar aluno com email duplicado"""
         # Primeiro, criar um aluno
-        student_data = {
-            "name": "Aluno Teste",
-            "email": "teste.duplicado@example.com"
-        }
+        student_data = {"name": "Aluno Teste", "email": "teste.duplicado@example.com"}
         client.post("/students", json=student_data)
-        
+
         # Tentar criar outro com mesmo email
         response = client.post("/students", json=student_data)
         assert response.status_code == 400
@@ -64,9 +58,6 @@ class TestStudentAPI:
 
     def test_create_student_invalid_email(self):
         """Teste de falha para criar aluno com email inválido"""
-        invalid_student = {
-            "name": "Aluno Inválido",
-            "email": "email-invalido"
-        }
+        invalid_student = {"name": "Aluno Inválido", "email": "email-invalido"}
         response = client.post("/students", json=invalid_student)
         assert response.status_code == 422  # Unprocessable Entity

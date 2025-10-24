@@ -31,11 +31,7 @@ async def create_student(student: StudentCreate):
     # Verificar se email já existe
     if any(s.email == student.email for s in students_db):
         raise HTTPException(status_code=400, detail="Email already registered")
-    
-    new_student = Student(
-        id=get_next_id(),
-        name=student.name,
-        email=student.email
-    )
+
+    new_student = Student(id=get_next_id(), name=student.name, email=student.email)
     students_db.append(new_student)
     return new_student
